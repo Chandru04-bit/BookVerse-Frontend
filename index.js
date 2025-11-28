@@ -25,7 +25,7 @@ const app = express();
 // ===============================
 app.use(
   cors({
-    origin: "http://localhost:5173", // React frontend (Vite default)
+    origin: "https://book-verse-amber.vercel.app/", // React frontend (Vite default)
     credentials: true,
   })
 );
