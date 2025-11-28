@@ -31,26 +31,7 @@ const app = express();
 // );
 
 
-// app.use(cors());
-const allowedOrigins = [
-  "https://book-verse-frontend-gold.vercel.app", // your Vercel frontend
-  "http://localhost:5173",                        // local dev
-];
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        console.log("❌ Blocked by CORS:", origin);
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    credentials: true,
-  })
-);
+app.use(cors());
 
 app.use(express.json()); // Parse JSON request bodies
 
@@ -74,7 +55,7 @@ mongoose
 //  Health Check Route (Frontend Check)
 // ===============================
 app.get("/api/health", (req, res) => {
-  res.status(200).json({ message: "✅ Server is running properly" });
+  res.status(200).json({ message: "Hello World" });
 });
 
 // ===============================
