@@ -33,8 +33,8 @@ const app = express();
 
 // app.use(cors());
 const allowedOrigins = [
-  "https://book-verse-backend-two.vercel.app", 
-  "http://localhost:5173"
+  "https://book-verse-frontend-gold.vercel.app", // your Vercel frontend
+  "http://localhost:5173",                        // local dev
 ];
 
 app.use(
@@ -43,10 +43,11 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.log("❌ Blocked by CORS:", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     credentials: true,
   })
 );
