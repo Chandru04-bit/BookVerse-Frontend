@@ -23,12 +23,16 @@ const app = express();
 // ===============================
 //  Middleware
 // ===============================
+// app.use(
+//   cors({
+//     origin: "https://book-verse-amber.vercel.app/", // React frontend (Vite default)
+//     credentials: true,
+//   })
+// );
+
+
 app.use(
-  cors({
-    origin: "https://book-verse-amber.vercel.app/", // React frontend (Vite default)
-    credentials: true,
-  })
-);
+   cors());
 app.use(express.json()); // Parse JSON request bodies
 
 // ✅ Serve uploaded images statically
