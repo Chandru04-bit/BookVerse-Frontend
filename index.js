@@ -1,4 +1,3 @@
-// ✅ backend/index.js
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -23,16 +22,10 @@ const app = express();
 // ===============================
 //  Middleware
 // ===============================
-// app.use(
-//   cors({
-//     origin: "https://book-verse-frontend-gold.vercel.app//", // React frontend (Vite default)
-//     credentials: true,
-//   })
-// );
-
-
-app.use(cors());
-
+app.use(cors({
+origin: "[https://book-verse-frontend-vm56.vercel.app](https://book-verse-frontend-vm56.vercel.app)", // your frontend deployed URL
+credentials: true,
+}));
 app.use(express.json()); // Parse JSON request bodies
 
 // ✅ Serve uploaded images statically
@@ -44,18 +37,18 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/bookstore";
 
 mongoose
-  .connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("✅ MongoDB Connected Successfully"))
-  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
+.connect(MONGO_URI, {
+useNewUrlParser: true,
+useUnifiedTopology: true,
+})
+.then(() => console.log("✅ MongoDB Connected Successfully"))
+.catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
 // ===============================
-//  Health Check Route (Frontend Check)
+//  Health Check Route
 // ===============================
 app.get("/api/health", (req, res) => {
-  res.status(200).json({ message: "Hello World" });
+res.status(200).json({ message: "Hello World" });
 });
 
 // ===============================
@@ -66,45 +59,23 @@ app.use("/api/books", bookRoutes); // Books CRUD
 
 // ✅ TEMP MOCK ORDERS ROUTE (to fix 404)
 app.get("/api/orders", (req, res) => {
-  res.json({
-    orders: [
-      {
-        _id: "1",
-        user: "John Doe",
-        total: 499,
-        status: "Delivered",
-        date: "2025-11-07",
-      },
-      {
-        _id: "2",
-        user: "Jane Smith",
-        total: 799,
-        status: "Pending",
-        date: "2025-11-06",
-      },
-      {
-        _id: "3",
-        user: "Mark Wilson",
-        total: 299,
-        status: "Processing",
-        date: "2025-11-05",
-      },
-    ],
-  });
+res.json({
+orders: [
+{ _id: "1", user: "John Doe", total: 499, status: "Delivered", date: "2025-11-07" },
+{ _id: "2", user: "Jane Smith", total: 799, status: "Pending", date: "2025-11-06" },
+{ _id: "3", user: "Mark Wilson", total: 299, status: "Processing", date: "2025-11-05" },
+],
+});
 });
 
 // ===============================
 //  Default Route (for testing)
 // ===============================
 app.get("/", (req, res) => {
-  res.send("📚 Bookstore API is running successfully...");
+res.send("📚 Bookstore API is running successfully...");
 });
 
 // ===============================
-//  Start Server
+//  Export App for Vercel Serverless
 // ===============================
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`🖼️ Static files: http://localhost:${PORT}/uploads/<filename>`);
-});
+export default app;
