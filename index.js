@@ -31,7 +31,26 @@ const app = express();
 // );
 
 
-app.use(cors());
+// app.use(cors());
+const allowedOrigins = [
+  "https://book-verse-backend-two.vercel.app", 
+  "http://localhost:5173"
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    credentials: true,
+  })
+);
+
 app.use(express.json()); // Parse JSON request bodies
 
 // ✅ Serve uploaded images statically
