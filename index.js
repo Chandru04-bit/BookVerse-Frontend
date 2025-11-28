@@ -31,8 +31,7 @@ const app = express();
 // );
 
 
-app.use(
-   cors());
+app.use(cors());
 app.use(express.json()); // Parse JSON request bodies
 
 // ✅ Serve uploaded images statically
